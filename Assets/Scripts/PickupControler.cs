@@ -25,6 +25,7 @@ public class PickupControler : MonoBehaviour
     public void pickUpHeld()
     {
         transform.position = wRigidbody.transform.position;
+        grabTrigger.transform.position = transform.position;
         nRigidbody.SetActive(true);
         wRigidbody.SetActive(false);
     }

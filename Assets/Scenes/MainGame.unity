@@ -501,6 +501,7 @@ MonoBehaviour:
   jetPack: {fileID: 2095343757}
   jetpackTrail: {fileID: 6755156162644935484, guid: b40304b871c72354c8ddd6bd52fd2e2e, type: 3}
   trail: {fileID: 0}
+  pickupHeld: 0
   pickup: {fileID: 0}
   lastMoon: {fileID: 0}
   fuelCharge: {fileID: 0}
@@ -1232,7 +1233,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 691920540}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 780, y: 0, z: -220}
+  m_LocalPosition: {x: 759, y: 0, z: -220}
   m_LocalScale: {x: 1500, y: 1500, z: 1500}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1369,7 +1370,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -210, y: 175}
+  m_AnchoredPosition: {x: -262, y: 190}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &758276722
@@ -1394,15 +1395,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4290354948
+  m_fontColor: {r: 0.017621996, g: 0.62261385, b: 0.7264151, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1419,8 +1420,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1679,8 +1680,8 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
+  far clip plane: 1500
+  field of view: 75
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -1727,7 +1728,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 118946066}
   smoothSpeed: 0.125
-  locationOffset: {x: 0, y: 5, z: -15}
+  locationOffset: {x: 0, y: 5, z: -10}
   rotationOffset: {x: 15, y: 0, z: 0}
 --- !u!1 &987526406
 GameObject:

@@ -25,7 +25,7 @@ public class CharacterCtrl : MonoBehaviour
     protected bool isJumping = false;
     protected bool grabLeft = false;
     protected bool grabRight = false;
-    protected bool pickupHeld = false;
+    public bool pickupHeld = false;
 
     public GameObject pickup;
     public GameObject lastMoon;

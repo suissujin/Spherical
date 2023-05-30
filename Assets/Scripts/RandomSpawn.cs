@@ -14,7 +14,7 @@ public class RandomSpawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < 40; ++i)
+        for (int i = 0; i < 50; ++i)
         {
             SpawnObject();
             transform.position -= new Vector3(36, 0, 0);
