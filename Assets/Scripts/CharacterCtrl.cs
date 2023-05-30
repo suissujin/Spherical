@@ -103,7 +103,7 @@ public class CharacterCtrl : MonoBehaviour
             fuelAmount = 0;
         }
 
-        sunDistance = Vector3.Distance(transform.position, GameObject.Find("Sun").transform.position) - 752;
+        sunDistance = Vector3.Distance(transform.position, GameObject.Find("Sun").transform.position) - 750;
 
     }
     private void FixedUpdate()
