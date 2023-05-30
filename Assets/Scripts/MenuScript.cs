@@ -11,6 +11,7 @@ public class MenuScript : MonoBehaviour
     public bool hoverPlay = false;
     public bool hoverQuit = false;
     public bool hoverHowTo = false;
+    public bool hoverMenu = false;
 
     private void Awake()
     {
@@ -48,6 +49,11 @@ public class MenuScript : MonoBehaviour
             {
                 Debug.Log(" click HowTo");
                 SceneManager.LoadScene("HowTo");
+            }
+            else if (hoverMenu)
+            {
+                Debug.Log(" click Menu");
+                SceneManager.LoadScene("Menu");
             }
         }
     }

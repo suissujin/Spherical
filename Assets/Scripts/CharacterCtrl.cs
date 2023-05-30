@@ -9,6 +9,8 @@ public class CharacterCtrl : MonoBehaviour
     public float strafeSpeed;
     public float jumpForce;
     public float rotationSpeed;
+    public float fuelAmount;
+    public float sunDistance;
 
     public Rigidbody mainBody;
     public GameObject armLeft;
@@ -24,9 +26,10 @@ public class CharacterCtrl : MonoBehaviour
     protected bool grabLeft = false;
     protected bool grabRight = false;
     protected bool pickupHeld = false;
-    public MoonBehaviour moonBehaviour;
+
     public GameObject pickup;
     public GameObject lastMoon;
+    public GameObject fuelCharge;
     void Awake()
     {
         Cursor.visible = false;
@@ -34,6 +37,7 @@ public class CharacterCtrl : MonoBehaviour
         mainBody = GetComponent<Rigidbody>();
         armLeftGrab.SetActive(false);
         armRightGrab.SetActive(false);
+        fuelAmount = 100;
     }
     private void Update()
     {
@@ -70,12 +74,12 @@ public class CharacterCtrl : MonoBehaviour
             if (grabLeft && grabRight)
             {
                 pickup.transform.parent.transform.parent = mainBody.transform;
-                pickup.transform.parent.GetComponent<PickupControler>().pickUpHeld();
+                pickupHeld = true;
             }
             else
             {
                 pickup.transform.parent.transform.parent = lastMoon.transform;
-                pickup.transform.parent.GetComponent<PickupControler>().pickUpDropped();
+                pickupHeld = false;
                 // pickup.transform.parent.GetComponent<GravityCtrl>().gravityOn = true;
             }
         }
@@ -94,11 +98,18 @@ public class CharacterCtrl : MonoBehaviour
             //Debug.Log("not jumping");
             Destroy(trail);
         }
+        if (fuelAmount <= 0)
+        {
+            fuelAmount = 0;
+        }
+
+        sunDistance = Vector3.Distance(transform.position, GameObject.Find("Sun").transform.position) - 752;
 
     }
     private void FixedUpdate()
     {
-        transform.position += new Vector3(1, 0, 0) * moonBehaviour.moonSpeed * Time.deltaTime;
+        float moonSpeed = GameObject.Find("MoonSpawner").GetComponent<RandomSpawn>().moonSpeed;
+        transform.position += new Vector3(1, 0, 0) * moonSpeed * Time.deltaTime;
         //Debug.Log(isGrounded);
         if (Input.GetKey(KeyCode.W))
         {
@@ -122,12 +133,16 @@ public class CharacterCtrl : MonoBehaviour
             mainBody.AddForce(mainBody.transform.right * strafeSpeed);
         }
 
-        if (Input.GetKey(KeyCode.Space) && isGrounded)
+        if (Input.GetKey(KeyCode.Space) && fuelAmount > 0)
         {
+            fuelAmount -= 0.1f;
             //Debug.Log("Jump");
-            mainBody.AddForce(mainBody.transform.up * jumpForce);
-            isGrounded = false;
-            isJumping = true;
+            if (isGrounded)
+            {
+                mainBody.AddForce(mainBody.transform.up * jumpForce);
+                isGrounded = false;
+                isJumping = true;
+            }
         }
 
         mainBody.transform.Rotate((Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime), (Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime), 0);
@@ -136,6 +151,11 @@ public class CharacterCtrl : MonoBehaviour
         {
             mainBody.velocity = Vector3.ClampMagnitude(mainBody.velocity, 10f);
         }
+
+        // if (isJumping)
+        // {
+        //     fuelAmount -= 0.1f;
+        // }
     }
     private void OnCollisionEnter(Collision ground)
     {
@@ -153,21 +173,35 @@ public class CharacterCtrl : MonoBehaviour
     private void OnTriggerEnter(Collider collider)
     {
         //Debug.Log("trigger");
-        if (collider.gameObject.tag == "Pickup")
+        if (collider.gameObject.tag == "Pickup" && !pickupHeld)
         {
             //Debug.Log("pickup");
             pickup = collider.gameObject;
+            pickup.transform.parent.GetComponent<PickupControler>().pickUpHeld();
         }
         else if (collider.gameObject.tag == "Moon")
         {
             lastMoon = collider.gameObject;
         }
+        else if (collider.gameObject.tag == "Sun")
+        {
+            Debug.Log("Dead RIP");
+            SceneManager.LoadScene("GameOver");
+        }
+        else if (collider.gameObject.tag == "Fuel")
+        {
+            Debug.Log("Fuel");
+            fuelCharge = collider.gameObject;
+            fuelAmount += 25;
+            Destroy(fuelCharge);
+        }
     }
     private void OnTriggerExit(Collider collider)
     {
-        if (collider.gameObject.tag == "Pickup")
+        if (collider.gameObject.tag == "Pickup" && !pickupHeld)
         {
             //Debug.Log("not pickup");
+            pickup.transform.parent.GetComponent<PickupControler>().pickUpDropped();
             pickup = null;
         }
     }

@@ -6,6 +6,7 @@ public class PickupControler : MonoBehaviour
 {
     public GameObject nRigidbody;
     public GameObject wRigidbody;
+    public GameObject grabTrigger;
 
     void Start()
     {
@@ -15,8 +16,11 @@ public class PickupControler : MonoBehaviour
     void FixedUpdate()
     {
         if (wRigidbody.activeSelf && wRigidbody.transform.position != transform.position)
-            wRigidbody.transform.position = transform.position;
-
+        {
+            grabTrigger.transform.position = wRigidbody.transform.position;
+        }
+        Debug.Log("My cute pickup is at " + transform.position);
+        Debug.Log("Has rigidbody: " + wRigidbody.activeSelf);
     }
     public void pickUpHeld()
     {
@@ -24,7 +28,6 @@ public class PickupControler : MonoBehaviour
         nRigidbody.SetActive(true);
         wRigidbody.SetActive(false);
     }
-
     public void pickUpDropped()
     {
         wRigidbody.transform.position = transform.position;

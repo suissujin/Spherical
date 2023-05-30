@@ -7,11 +7,11 @@ public class MoonBehaviour : MonoBehaviour
     public int moonType;
     public GameObject pickUp;
     public GameObject Goal;
-    public float moonSpeed = 0.1f;
+    public GameObject fuelCharge;
+
 
     private void Start()
     {
-        StartCoroutine(FastMoon());
         moonType = Random.Range(0, 10);
 
         if (moonType >= 0 && moonType <= 5)
@@ -22,10 +22,13 @@ public class MoonBehaviour : MonoBehaviour
         {
             moonType = Random.Range(1, 3);
         }
+
         switch (moonType)
         {
             case 0: // white
                 GetComponent<Renderer>().material.color = Color.white;
+                GameObject newFuel = Instantiate(fuelCharge, transform.position + Random.onUnitSphere * 10, Quaternion.identity);
+                newFuel.transform.parent = transform;
                 break;
             case 1: // red
                 GetComponent<Renderer>().material.color = Color.red;
@@ -49,15 +52,17 @@ public class MoonBehaviour : MonoBehaviour
 
     private void MoveMoon()
     {
-        transform.position += new Vector3(1, 0, 0) * moonSpeed * Time.deltaTime;
+        transform.position += new Vector3(1, 0, 0) * GameObject.Find("MoonSpawner").GetComponent<RandomSpawn>().moonSpeed * Time.deltaTime;
     }
 
-    IEnumerator FastMoon()
+    void OnTriggerEnter(Collider other)
     {
-        while (true)
+        Debug.Log("Moon hit something");
+        if (other.gameObject.tag == "Sun")
         {
-            yield return new WaitForSeconds(1f);
-            moonSpeed += 1f;
+            Debug.Log("Moon hit sun");
+            GameObject.Find("MoonSpawner").GetComponent<RandomSpawn>().SpawnObject();
+            Destroy(gameObject);
         }
     }
 }
